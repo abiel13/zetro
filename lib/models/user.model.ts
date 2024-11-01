@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  image:{
+    type:String,
+    required:true
+  },
   name: {
     type: String,
     required: true,
@@ -17,10 +21,10 @@ const userSchema = new mongoose.Schema({
   bio: {
     type: String,
   },
-  threads: [
+  tweets: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Thread",
+      ref: "Tweets",
     },
   ],
   onboarded: {
@@ -29,7 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   communities: [
     {
-      types: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Community",
     },
   ],
