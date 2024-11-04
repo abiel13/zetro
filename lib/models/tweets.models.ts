@@ -25,9 +25,9 @@ const tweetsSchema = new mongoose.Schema({
     type: String,
   },
   children: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Tweets",
-  },
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tweets" }],
+    default: []
+  }
 });
 
 const Tweets = mongoose.models.Tweets || mongoose.model("Tweets", tweetsSchema);

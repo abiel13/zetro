@@ -28,6 +28,7 @@ export async function createTweet({
       author,
       communityId: null,
       thumbnail,
+      children:[],
     });
     console.log(tweet);
     // push tweet to mdel
@@ -96,8 +97,47 @@ export async function fetchTweetById(id: string) {
         },
       })
       .exec();
-    return tweet;
+    return JSON.parse(JSON.stringify(tweet));
   } catch (error: any) {
-    console.log(error);
+    console.log(error.message);
+  }
+}
+
+export async function addCommentToTweet(
+  tweetId: string,
+  commentText: string,
+  thumbnail: string,
+  userId: string,
+  path: string
+) {
+  try {
+    const originalTweet = await Tweets.findById(tweetId);
+
+    if (!originalTweet) {
+      
+      throw new Error("Thread not found");
+    }
+
+    console.log(originalTweet._doc)
+    const commentThread = new Tweets({
+      text: commentText,
+      author: userId,
+      parentId: tweetId,
+      thumbnail,
+    });
+
+    const savedComment = await commentThread.save();
+
+    if (!originalTweet.children) {
+      originalTweet.children = [];
+    }
+
+    originalTweet.children.push(savedComment._id);
+
+    await originalTweet.save();
+
+    revalidatePath(path);
+  } catch (error:any) {
+  console.log(error.message)
   }
 }

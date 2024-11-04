@@ -8,7 +8,6 @@ export default async function HomePage() {
   const result = await fetchtweets(1, 30);
   const user = await currentUser();
 
-  console.log(result)
   return (
     <div>
       <h1 className="head-text text-left">Home</h1>

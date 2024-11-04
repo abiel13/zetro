@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { usePathname , useRouter } from "next/navigation";
-import { SignOutButton, SignedIn } from "@clerk/nextjs";
+import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
 
 const LeftSidebar = () => {
   const pathname = usePathname();
+  const { userId } = useAuth();
 
 
   return (
@@ -17,6 +18,10 @@ const LeftSidebar = () => {
           const isActive =
             (pathname.includes(item.route) && item.route.length > 1) ||
             item.route == pathname;
+
+
+          if (item.route === "/profile") item.route = `${item.route}/${userId}`;
+
           return (
             <Link
               className={`leftsidebar_link ${isActive && "bg-primary-500"}`}

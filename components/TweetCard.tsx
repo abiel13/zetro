@@ -11,7 +11,7 @@ interface TweetCardI {
   author: {
     name: string;
     image: string;
-    id: string;
+    _id: string;
   };
   communnity: {
     id: string;
@@ -31,7 +31,7 @@ function TweetCard({
   id,
   currentUserId,
   parentId,
-  content,
+  content ,
   thumbnail,
   author,
   communnity,
@@ -40,11 +40,11 @@ function TweetCard({
   isComment,
 }: TweetCardI) {
   return (
-    <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
+    <article className={`flex w-full flex-col rounded-xl ${isComment ? 'px-0 xs:px-7 ': 'bg-dark-2 p-7'}`}>
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col item-center">
-            <Link href={`/profile/${author.id}`} className="w-11 h-11 relative">
+            <Link href={`/profile/${author._id}`} className="w-11 h-11 relative">
               <Image
                 src={author.image}
                 alt="profile img"
@@ -55,14 +55,23 @@ function TweetCard({
 
             <div className="thread-card_bar" />
           </div>
-
           <div className="flex w-full flex-col">
-            <Link href={`/profile/${author.id}`} className="w-fit">
-              <h3 className="cursor-pointer text-base-semibold text-light-2">
-                {author.name}
+            <Link href={`/profile/${author._id}`} className="w-fit">
+              <h3 className="cursor-pointer text-base-semibold text-light-2 capitalize mb-4">
+                {author.name}{author.image}
               </h3>
             </Link>
-
+            {thumbnail && (
+              <div className="h-[450px] relative">
+                <Image
+                  src={thumbnail}
+                  alt="thumbnail"
+                  width={250}
+                  height={250}
+                  className="rounded-xl w-auto max-h-full object-cover "
+                />
+              </div>
+            )}
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
             <div className="mt-5 flex flex-col gap-3">

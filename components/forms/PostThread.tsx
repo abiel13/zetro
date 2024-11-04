@@ -4,22 +4,18 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import * as z from "zod";
 import { Textarea } from "../ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
-import * as z from "zod";
 import Image from "next/image";
 
-import { userValidation } from "@/lib/validations/user";
-import CreateThread from "@/app/(root)/create-thread/page";
 import { createTweet } from "@/lib/actions/tweets.actions";
 import { threadValidaton } from "@/lib/validations/thread";
 
@@ -35,30 +31,27 @@ const PostThread = ({ userId }: { userId: string }) => {
         author: userId,
         path: pathname,
         communityId: "",
-        thumbnail:''
+        thumbnail: Files[0] ? values.thumbnail! : "",
       });
+
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
   }
 
-  const handleImage = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    fieldChange: (value: string) => void
-  ) => {
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    const fileReader = new FileReader();
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
+      setFiles([file]);
 
-      setFiles(Array.from(e.target.files));
-
-      fileReader.onload = async (event: any) => {
-        const imageDataUrl = event?.target?.result?.toString() || "";
-
-        fieldChange(imageDataUrl);
+      const fileReader = new FileReader();
+      fileReader.onload = (event: any) => {
+        form.setValue("thumbnail", event?.target?.result?.toString() || "");
       };
+      console.log()
       fileReader.readAsDataURL(file);
     }
   };
@@ -68,38 +61,70 @@ const PostThread = ({ userId }: { userId: string }) => {
     defaultValues: {
       thread: "",
       userId: userId,
+      thumbnail: "",
     },
   });
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col justify-start gap-10 mt-10"
+        className="flex flex-col gap-6 p-8 bg-[#1f1f2e] rounded-lg shadow-lg w-full mx-auto mt-12"
       >
         <FormField
           control={form.control}
           name="thread"
           render={({ field }) => (
-            <FormItem className="w-full flex-col  flex justify-start   gap-4">
-              <FormLabel
-                style={{
-                  color: "white",
-                }}
-                className="text-light-2 mt-10 text-base-semibold text-xl"
-              >
-                Content
+            <FormItem>
+              <FormLabel className="text-white text-lg font-semibold">
+                Share Your Thoughts
               </FormLabel>
-              <FormControl className="no-focus bg-dark-4 border-dark-3  text-light-1">
-                <Textarea rows={15} {...field} />
+              <FormControl>
+                <Textarea
+                  rows={4}
+                  className="bg-[#2b2b40] text-white border border-[#40405a] focus:border-red-500 rounded-md p-4"
+                  placeholder="Write your message here..."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
+        <FormItem>
+          <FormLabel className="text-white text-lg font-semibold">
+            Upload an Image
+          </FormLabel>
+          <FormControl>
+            <input
+              type="file"
+              accept="image/*"
+              className="block w-full text-white bg-[#2b2b40] border border-[#40405a] rounded-md p-2 cursor-pointer"
+              onChange={handleImage}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+
+        {Files.length > 0 && (
+          <div className="mt-4">
+            <p className="text-white text-sm font-medium">Image Preview:</p>
+            <div className="mt-2 flex justify-center rounded-lg overflow-hidden">
+              <Image
+                src={URL.createObjectURL(Files[0])}
+                alt="Selected image"
+                width={250}
+                height={250}
+                className="rounded-lg object-cover"
+              />
+            </div>
+          </div>
+        )}
+
         <Button
-          type="submit"
-          className="bg-red-400 text-white w-full px-2 py-2 font-bold"
+        type="submit"
+          className="w-full py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg mt-4"
         >
           Create Tweet
         </Button>
