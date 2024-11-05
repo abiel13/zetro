@@ -108,18 +108,15 @@ export async function fetchUsers({
   try {
     connectToDB();
 
-    // Calculate the number of users to skip based on the page number and page size.
     const skipAmount = (pageNumber - 1) * pageSize;
 
     // Create a case-insensitive regular expression for the provided search string.
     const regex = new RegExp(searchString, "i");
 
-    // Create an initial query object to filter users.
     const query: FilterQuery<typeof User> = {
       id: { $ne: userId }, // Exclude the current user from the results.
     };
 
-    // If the search string is not empty, add the $or operator to match either username or name fields.
     if (searchString.trim() !== "") {
       query.$or = [
         { username: { $regex: regex } },
@@ -127,7 +124,6 @@ export async function fetchUsers({
       ];
     }
 
-    // Define the sort options for the fetched users based on createdAt field and provided sort order.
     const sortOptions = { createdAt: sortBy };
 
     const usersQuery = User.find(query)
@@ -157,7 +153,6 @@ export async function getActivity(userId: string) {
     // Find all threads created by the user
     const userTweets = await Tweets.find({ author: userId });
 
-    // Collect all the child Tweets ids (replies) from the 'children' field of each user Tweets
     const childTweetsIds = userTweets.reduce((acc, userTweets) => {
       return acc.concat(userTweets.children);
     }, []);
