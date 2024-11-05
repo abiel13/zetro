@@ -8,6 +8,7 @@ interface ProfI {
   username: string;
   imgUrl: string;
   bio: string;
+  type?:any
 }
 
 function ProfileHeader({

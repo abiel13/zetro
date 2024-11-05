@@ -1,22 +1,25 @@
 import AccountProfile from "@/components/forms/AccountProfile";
+import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
-import { userInfo } from "os";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const OnboardingPage =async () => {
 
 const user = await currentUser();
 
-const userInfo = {}
+
+const userInfo = await fetchUser(user!.id);
+if(userInfo.onboarded) redirect('/');
 
 const userData = {
-  id:user?.id || "",
-  objectId:userInfo?._id ,
-  username:userInfo?.username || user?.username,
-  bio:userInfo.bio || "",
-  name: userInfo?.name || user?.firstName ||"",
-  image:userInfo?.image || user?.imageUrl
-}
+  id: user!.id,
+  objectId: userInfo?._id,
+  username: userInfo ? userInfo?.username : user?.username,
+  name: userInfo ? userInfo?.name : user?.firstName ?? "",
+  bio: userInfo ? userInfo?.bio : "",
+  image: userInfo ? userInfo?.image : user?.imageUrl,
+};
 
 
   return (

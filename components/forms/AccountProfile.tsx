@@ -27,15 +27,14 @@
     user: {
       id: string;
       objectId: string;
-      userName: string;
+      username: string;
       name: string;
       bio: string;
       image: string;
     };
-    btnTitle: string;
   }
 
-  const AccountProfile = ({ user, btnTitle }: AccountProfileProps) => {
+  const AccountProfile = ({ user }: AccountProfileProps) => {
     const [Files, setFiles] = useState<File[]>([]);
     const pathname = usePathname();
     const router = useRouter();
@@ -101,7 +100,7 @@
         profile_photo: user?.image || " ",
         name: user?.name || "",
         bio: user?.bio || "",
-        username: user?.userName || "",
+        username: user?.username || "",
       },
     });
 

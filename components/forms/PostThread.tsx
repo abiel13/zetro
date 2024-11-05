@@ -18,19 +18,22 @@ import Image from "next/image";
 
 import { createTweet } from "@/lib/actions/tweets.actions";
 import { threadValidaton } from "@/lib/validations/thread";
+import { useOrganization } from "@clerk/nextjs";
 
 const PostThread = ({ userId }: { userId: string }) => {
   const [Files, setFiles] = useState<File[]>([]);
   const pathname = usePathname();
   const router = useRouter();
+  const {organization} = useOrganization()
 
   async function onSubmit(values: z.infer<typeof threadValidaton>) {
     try {
+      
       await createTweet({
         text: values.thread,
         author: userId,
         path: pathname,
-        communityId: "",
+        communityId: organization ? organization?.id : null,
         thumbnail: Files[0] ? values.thumbnail! : "",
       });
 

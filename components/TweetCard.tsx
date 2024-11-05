@@ -1,3 +1,4 @@
+import { formatDateString } from "@/lib/utils/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -31,7 +32,7 @@ function TweetCard({
   id,
   currentUserId,
   parentId,
-  content ,
+  content,
   thumbnail,
   author,
   communnity,
@@ -40,11 +41,18 @@ function TweetCard({
   isComment,
 }: TweetCardI) {
   return (
-    <article className={`flex w-full flex-col rounded-xl ${isComment ? 'px-0 xs:px-7 ': 'bg-dark-2 p-7'}`}>
+    <article
+      className={`flex w-full flex-col rounded-xl ${
+        isComment ? "px-0 xs:px-7 " : "bg-dark-2 p-7"
+      }`}
+    >
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col item-center">
-            <Link href={`/profile/${author._id}`} className="w-11 h-11 relative">
+            <Link
+              href={`/profile/${author._id}`}
+              className="w-11 h-11 relative"
+            >
               <Image
                 src={author.image}
                 alt="profile img"
@@ -58,7 +66,8 @@ function TweetCard({
           <div className="flex w-full flex-col">
             <Link href={`/profile/${author._id}`} className="w-fit">
               <h3 className="cursor-pointer text-base-semibold text-light-2 capitalize mb-4">
-                {author.name}{author.image}
+                {author.name}
+                {author.image}
               </h3>
             </Link>
             {thumbnail && (
@@ -118,7 +127,25 @@ function TweetCard({
             </div>
           </div>
         </div>
-      </div>
+
+      
+      </div>  {!isComment && communnity && (
+          <Link
+            href={"/communities/$community.id"}
+            className="mt-5 flex items-center"
+          >
+            <p>
+              {formatDateString(createdAt)} -{" "} {communnity.name} Community
+            </p>
+            <Image
+              src={communnity.image}
+              alt="community image"
+              width={14}
+              height={14}
+              className="ml-11 rounded-full"
+            />
+          </Link>
+        )}
     </article>
   );
 }
