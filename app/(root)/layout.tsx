@@ -18,8 +18,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className="bg-black">
-          {/* Topbar */}
+        <body className="bg-background">
+          {/* Topbarb*/}
           <Topbar />
           <main className="flex flex-row">
             <LeftSidebar />

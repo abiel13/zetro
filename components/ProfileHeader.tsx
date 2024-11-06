@@ -39,7 +39,7 @@ function ProfileHeader({
           </div>
         </div>
       </div>{" "}
-      <p className="mt-6 max-w-lg text-base-regular text-light-2">{bio}</p>
+      <p className="mt-6 max-w-lg text-base-regular text-text-light">{bio}</p>
       <div className="mt-12 h-0.5 w-full bg-white" />
     </div>
   );

@@ -28,7 +28,7 @@ function Searchbar({ routeType }: Props) {
   }, [search, routeType]);
 
   return (
-    <div className='searchbar'>
+    <div className='searchbar bg-sidebar-bg'>
       <Image
         src='/assets/search-gray.svg'
         alt='search'
@@ -43,7 +43,7 @@ function Searchbar({ routeType }: Props) {
         placeholder={`${
           routeType !== "/search" ? "Search communities" : "Search creators"
         }`}
-        className='no-focus searchbar_input'
+        className='no-focus searchbar_input !bg-transparent shadow-none'
       />
     </div>
   );

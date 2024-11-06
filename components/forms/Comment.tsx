@@ -16,7 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 import * as z from "zod";
 import Image from "next/image";
 import { commentValidation } from "@/lib/validations/thread";
-import { addCommentToTweet } from "@/lib/actions/tweets.actions";
+import { addCommentToTweets } from "@/lib/actions/tweets.actions";
 
 interface CommentProps {
   tweetId: string;
@@ -27,22 +27,26 @@ interface CommentProps {
 function Comment({ tweetId, currentUserImg, currentUserId }: CommentProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof commentValidation>) {
     try {
-      await addCommentToTweet(
+      setLoading(true);
+      await addCommentToTweets(
         tweetId,
         values.thread,
-        values.image || "",
         JSON.parse(currentUserId),
-        pathname
+        pathname,
+        values.image || ""
       );
       form.setValue("thread", " ");
       form.setValue("image", " ");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -75,7 +79,7 @@ function Comment({ tweetId, currentUserImg, currentUserId }: CommentProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 bg-gray-800    rounded-lg shadow-md w-full mx-auto flex-col items-start"
+        className="space-y-4 bg-sidebar-inactive    rounded-lg shadow-md w-full mx-auto flex-col items-start"
       >
         <div className="flex flex-row w-full items-center gap-2 h-full p-4 rounded">
           <FormField
@@ -117,7 +121,7 @@ function Comment({ tweetId, currentUserImg, currentUserId }: CommentProps) {
               type="submit"
               className=" py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 shadow-md"
             >
-              Post Comment
+            {!loading ? 'Post Comments ' : 'Posting...'}
             </Button>
           </div>
         </div>

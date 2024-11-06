@@ -5,7 +5,7 @@
 @layer components {
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
+    @apply flex min-h-screen flex-1 flex-col items-center bg-background px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
   }
 
   /* Head Text */
@@ -34,7 +34,7 @@
 
   /* thread card  */
   .thread-card_bar {
-    @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-800;
+    @apply relative mt-2 w-0.5 grow rounded-full bg-[#E5E7EB];
   }
 
   /* User card */
@@ -59,7 +59,7 @@
   }
 
   .topbar {
-    @apply fixed top-0 z-30 flex w-full items-center justify-between bg-dark-2 px-6 py-3;
+    @apply fixed top-0 z-30 flex w-full items-center justify-between bg-[#fff] text-[#333] px-6 py-3;
   }
 
   .bottombar {
@@ -75,11 +75,11 @@
   }
 
   .leftsidebar {
-    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-dark-2 pb-5 pt-28 max-md:hidden;
+    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r  bg-sidebar-bg pb-5 pt-28 max-md:hidden;
   }
 
   .leftsidebar_link {
-    @apply relative flex justify-start gap-4 rounded-lg p-4;
+    @apply relative text-sidebar-text flex px-6 justify-start gap-4 rounded-lg p-4;
   }
 
   .pagination {
@@ -87,7 +87,7 @@
   }
 
   .rightsidebar {
-    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-2 px-10 pb-6 pt-28 max-xl:hidden;
+    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-[#E5E7EB] bg-[#F9FAFB] px-10 pb-6 pt-28 max-xl:hidden;
   }
 }
 
@@ -158,4 +158,4 @@
 
 .comment-form_btn {
   @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
-}
+} 

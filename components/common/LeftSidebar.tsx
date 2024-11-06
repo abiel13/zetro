@@ -12,8 +12,8 @@ const LeftSidebar = () => {
 
 
   return (
-    <section className="custom-scrollbar leftsidebar">
-      <div className="flex w-full flex-1 flex-col px-6 ">
+    <section className="custom-scrollbar leftsidebar shadow-sidebar">
+      <div className="flex w-full flex-1 flex-col px-6 gap-3">
         {sidebarLinks.map((item, i) => {
           const isActive =
             (pathname.includes(item.route) && item.route.length > 1) ||
@@ -24,7 +24,7 @@ const LeftSidebar = () => {
 
           return (
             <Link
-              className={`leftsidebar_link ${isActive && "bg-primary-500"}`}
+              className={`leftsidebar_link ${isActive ? "bg-[#1A73E8]" : 'bg-sidebar-inactive'} `}
               key={i}
               href={item.route}
             >
@@ -41,13 +41,13 @@ const LeftSidebar = () => {
         })}
       </div>
 
-      <div className="mt-10 px-6">
+      <div className="mt-10 px-6 w-full mx-auto py-2">
         <SignedIn>
           <SignOutButton  >
-            <div className="flex cursor-pointer gap-4 items-center">
+            <div className="flex cursor-pointer gap-4 items-center bg-sidebar-inactive rounded-xl py-4 px-3">
               <Image
                 src={"/assets/logout.svg"}
-                alt="logout"
+                alt="logout" 
                 width={24}
                 height={24}
               />

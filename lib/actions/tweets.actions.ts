@@ -66,12 +66,13 @@ export async function createTweets({ text, author, communityId, path, thumbnail 
     const createdTweets = await Tweets.create({
       text,
       author,
-      community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+      community: communityIdObject,
+      thumbnail, // Assign communityId if provided, or leave it null for personal account
     });
 
     // Update User model
     await User.findByIdAndUpdate(author, {
-      $push: { Tweetss: createdTweets._id },
+      $push: { Tweets: createdTweets._id },
     });
 
     if (communityIdObject) {
@@ -87,16 +88,16 @@ export async function createTweets({ text, author, communityId, path, thumbnail 
   }
 }
 
-async function fetchAllChildTweetss(tweetsId: string): Promise<any[]> {
-  const childTweetss = await Tweets.find({ parentId: tweetsId });
+async function fetchAllChildTweets(tweetsId: string): Promise<any[]> {
+  const childTweets = await Tweets.find({ parentId: tweetsId });
 
-  const descendantTweetss = [];
-  for (const childTweets of childTweetss) {
-    const descendants = await fetchAllChildTweetss(childTweets._id);
-    descendantTweetss.push(childTweets, ...descendants);
+  const descendantTweets = [];
+  for (const childTweet of childTweets) {
+    const descendants = await fetchAllChildTweets(childTweet._id);
+    descendantTweets.push(childTweet, ...descendants);
   }
 
-  return descendantTweetss;
+  return descendantTweets;
 }
 
 export async function deleteTweets(id: string, path: string): Promise<void> {
@@ -111,25 +112,25 @@ export async function deleteTweets(id: string, path: string): Promise<void> {
     }
 
     // Fetch all child Tweetss and their descendants recursively
-    const descendantTweetss = await fetchAllChildTweetss(id);
+    const descendantTweetss = await fetchAllChildTweets(id);
 
     // Get all descendant Tweets IDs including the main Tweets ID and child Tweets IDs
     const descendantTweetsIds = [
       id,
-      ...descendantTweetss.map((Tweets) => Tweets._id),
+      ...descendantTweetss.map((tweets:any) => tweets._id),
     ];
 
     // Extract the authorIds and communityIds to update User and Community models respectively
     const uniqueAuthorIds = new Set(
       [
-        ...descendantTweetss.map((Tweets) => Tweets.author?._id?.toString()), // Use optional chaining to handle possible undefined values
+        ...descendantTweetss.map((tweets:any) => tweets.author?._id?.toString()), // Use optional chaining to handle possible undefined values
         mainTweets.author?._id?.toString(),
       ].filter((id) => id !== undefined)
     );
 
     const uniqueCommunityIds = new Set(
       [
-        ...descendantTweetss.map((Tweets) => Tweets.community?._id?.toString()), // Use optional chaining to handle possible undefined values
+        ...descendantTweetss.map((tweets:any) => tweets.community?._id?.toString()), // Use optional chaining to handle possible undefined values
         mainTweets.community?._id?.toString(),
       ].filter((id) => id !== undefined)
     );
@@ -140,13 +141,13 @@ export async function deleteTweets(id: string, path: string): Promise<void> {
     // Update User model
     await User.updateMany(
       { _id: { $in: Array.from(uniqueAuthorIds) } },
-      { $pull: { Tweetss: { $in: descendantTweetsIds } } }
+      { $pull: { Tweets: { $in: descendantTweetsIds } } }
     );
 
     // Update Community model
     await Community.updateMany(
       { _id: { $in: Array.from(uniqueCommunityIds) } },
-      { $pull: { Tweetss: { $in: descendantTweetsIds } } }
+      { $pull: { Tweets: { $in: descendantTweetsIds } } }
     );
 
     revalidatePath(path);
@@ -191,7 +192,7 @@ export async function fetchTweetsById(TweetsId: string) {
       })
       .exec();
 
-    return Tweets;
+    return tweets;
   } catch (err) {
     console.error("Error while fetching Tweets:", err);
     throw new Error("Unable to fetch Tweets");
@@ -202,7 +203,8 @@ export async function addCommentToTweets(
   tweetsId: string,
   commentText: string,
   userId: string,
-  path: string
+  path: string,
+  thumbnail:string
 ) {
   connectToDB();
 
@@ -218,7 +220,8 @@ export async function addCommentToTweets(
     const commentTweets = new Tweets({
       text: commentText,
       author: userId,
-      parentId: tweetsId, // Set the parentId to the original Tweets's ID
+      parentId: tweetsId,
+      thumbnail, // Set the parentId to the original Tweets's ID
     });
 
     // Save the comment Tweets to the database

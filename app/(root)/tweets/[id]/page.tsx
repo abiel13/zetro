@@ -1,6 +1,6 @@
 import TweetCard from "@/components/TweetCard";
 import Comment from "@/components/forms/Comment";
-import { fetchTweetById } from "@/lib/actions/tweets.actions";
+import { fetchTweetsById } from "@/lib/actions/tweets.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
@@ -16,7 +16,9 @@ const TweetDetailPage = async ({ params }: { params: { id: string } }) => {
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
-  const tweet = await fetchTweetById(params.id);
+  const tweet = await fetchTweetsById(params.id);
+
+
 
 
   return (

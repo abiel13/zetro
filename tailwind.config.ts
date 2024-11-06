@@ -173,6 +173,44 @@ module.exports = {
     },
     extend: {
       colors: {
+          background: '#FFFFFF',
+          primary: {
+            DEFAULT: '#1A73E8',
+            hover: '#0F5BB5',
+          },
+          secondary: {
+            DEFAULT: '#FFB74D',
+            hover: '#E65100',
+          },
+          text: {
+            DEFAULT: '#333333',
+            light: '#9E9E9E',
+          },
+          card: {
+            bg: '#F9F9F9',
+            border: '#E0E0E0',
+            shadow: 'rgba(0, 0, 0, 0.1)',
+          },
+          form: {
+            input: '#FFFFFF',
+            border: '#D1D1D1',
+            placeholder: '#9E9E9E',
+          },
+          sidebar: {
+            bg: '#F3F4F6', // Light grey for contrast with main background
+            text: '#333333', // Dark grey for readability
+            hover: '#E5E7EB', // Slightly darker grey for hover effect
+            active: '#1A73E8', 
+            inactive: '#6B7280'
+            // Accent color for active link
+          },
+          link: '#1A73E8',
+          success: '#4CAF50',
+          error: '#F44336',
+        boxShadow: {
+          card: '0 2px 4px rgba(0, 0, 0, 0.1)',
+          sidebar: '2px 0 4px rgba(0, 0, 0, 0.05)',
+        },
         "primary-500": "#877EFF",
         "secondary-500": "#FFB620",
         blue: "#0095F6",

@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 
-import { createTweet } from "@/lib/actions/tweets.actions";
+import { createTweets } from "@/lib/actions/tweets.actions";
 import { threadValidaton } from "@/lib/validations/thread";
 import { useOrganization } from "@clerk/nextjs";
 
@@ -29,7 +29,7 @@ const PostThread = ({ userId }: { userId: string }) => {
   async function onSubmit(values: z.infer<typeof threadValidaton>) {
     try {
       
-      await createTweet({
+      await createTweets({
         text: values.thread,
         author: userId,
         path: pathname,
@@ -72,20 +72,20 @@ const PostThread = ({ userId }: { userId: string }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-6 p-8 bg-[#1f1f2e] rounded-lg shadow-lg w-full mx-auto mt-12"
+        className="flex flex-col gap-6 p-8 bg-background shadow-card-shadow shadow-lg rounded-lg w-full mx-auto mt-12"
       >
         <FormField
           control={form.control}
           name="thread"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white text-lg font-semibold">
+              <FormLabel className="text-text text-lg font-semibold">
                 Share Your Thoughts
               </FormLabel>
               <FormControl>
                 <Textarea
                   rows={4}
-                  className="bg-[#2b2b40] text-white border border-[#40405a] focus:border-red-500 rounded-md p-4"
+                  className="bg-sidebar-inactive text-white border border-[#40405a] focus:border-red-500 rounded-md p-4"
                   placeholder="Write your message here..."
                   {...field}
                 />
@@ -103,7 +103,7 @@ const PostThread = ({ userId }: { userId: string }) => {
             <input
               type="file"
               accept="image/*"
-              className="block w-full text-white bg-[#2b2b40] border border-[#40405a] rounded-md p-2 cursor-pointer"
+              className="block w-full text-white bg-sidebar-inactive border border-[#40405a] rounded-md p-2 cursor-pointer"
               onChange={handleImage}
             />
           </FormControl>
@@ -127,7 +127,7 @@ const PostThread = ({ userId }: { userId: string }) => {
 
         <Button
         type="submit"
-          className="w-full py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg mt-4"
+          className="w-full py-3 bg-sidebar-active hover:bg-sidebar-hover text-white font-semibold rounded-lg mt-4"
         >
           Create Tweet
         </Button>

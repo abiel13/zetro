@@ -1,16 +1,18 @@
 import Image from "next/image";
-import { currentUser } from "@clerk/nextjs/server";
+
 import { redirect } from "next/navigation";
 
 import { profileTabs } from "@/constants/constants.index";
 
 import TweetsTab from "@/components/TweetsTab";
 import ProfileHeader from "@/components/ProfileHeader";
+import { currentUser } from "@clerk/nextjs/server";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 
 async function Page({ params }: { params: { id: string } }) {
+  
   const user = await currentUser();
   if (!user) return null;
 
@@ -44,7 +46,7 @@ async function Page({ params }: { params: { id: string } }) {
 
                 {tab.label === "Threads" && (
                   <p className='ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2'>
-                    {userInfo.threads.length}
+                    {userInfo.tweets.length}
                   </p>
                 )}
               </TabsTrigger>
