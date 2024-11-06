@@ -23,7 +23,7 @@ async function Page() {
           <>
             {activity.map((activity) => (
               <Link key={activity._id} href={`/tweets/${activity.parentId}`}>
-                <article className='activity-card bg-sidebar-inactive'>
+                <article className='activity-card bg-sidebar-bg'>
                   <Image
                     src={activity.author.image}
                     alt='user_logo'
@@ -31,8 +31,8 @@ async function Page() {
                     height={20}
                     className='rounded-full object-cover'
                   />
-                  <p className='!text-small-regular text-light-1'>
-                    <span className='mr-1 text-primary-500'>
+                  <p className=' text-text font-bold'>
+                    <span className='mr-2 text-sidebar-active text-lg font-medium'>
                       {activity.author.name}
                     </span>{" "}
                     replied to your thread

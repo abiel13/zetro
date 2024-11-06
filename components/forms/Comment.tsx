@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ImageIcon } from "@radix-ui/react-icons";
+import { ImageIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -43,6 +43,7 @@ function Comment({ tweetId, currentUserImg, currentUserId }: CommentProps) {
       );
       form.setValue("thread", " ");
       form.setValue("image", " ");
+      setImagePreview("");
     } catch (error) {
       console.log(error);
     } finally {
@@ -81,7 +82,7 @@ function Comment({ tweetId, currentUserImg, currentUserId }: CommentProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 bg-sidebar-inactive    rounded-lg shadow-md w-full mx-auto flex-col items-start"
       >
-        <div className="flex flex-row w-full items-center gap-2 h-full p-4 rounded">
+        <div className="flex flex-row w-full items-center gap-2 h-full p-2 md:p-4 rounded">
           <FormField
             control={form.control}
             name="thread"
@@ -92,13 +93,13 @@ function Comment({ tweetId, currentUserImg, currentUserId }: CommentProps) {
                   alt="profile image"
                   width={48}
                   height={48}
-                  className="rounded-full object-cover"
+                  className="rounded-full object-cover hidden md:block"
                 />
                 <FormControl className="flex-1 ">
                   <Input
                     type="text"
                     placeholder="What's on your mind?"
-                    className="bg-gray-700 text-white placeholder-gray-400 border-none focus:ring-2 focus:ring-blue-500 rounded-lg px-4 py-2"
+                    className="bg-gray-700 min-h-fit  text-white placeholder-gray-400 border-none focus:ring-2 focus:ring-blue-500 rounded-lg px-4 py-2"
                     {...field}
                   />
                 </FormControl>
@@ -120,8 +121,12 @@ function Comment({ tweetId, currentUserImg, currentUserId }: CommentProps) {
             <Button
               type="submit"
               className=" py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 shadow-md"
+              disabled={loading}
             >
-            {!loading ? 'Post Comments ' : 'Posting...'}
+              <p className="hidden md:block">{!loading ? "Post Comments " : "Posting..."}</p>
+              <p className="block md:hidden">
+                <PaperPlaneIcon />
+              </p>
             </Button>
           </div>
         </div>

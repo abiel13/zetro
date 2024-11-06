@@ -10,7 +10,7 @@ export default async function HomePage() {
 
   return (
     <div>
-      <h1 className="head-text text-left">Home</h1>
+      <h1 className="head-text text-left text-text">Feed</h1>
   
       <section>
         {result.posts.length === 0 ? (

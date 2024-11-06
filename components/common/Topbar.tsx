@@ -9,7 +9,7 @@ const Topbar = () => {
     <nav className="topbar border-[#E5E7EB] border-b-2">
       <Link href={"/"} className="flex items-center gap-4">
         <Image src={"/logo.svg"} alt={"logo"} width={28} height={28} />
-        <p className="text-heading3-bold text-[#333]  max-xs:hidden">Zetro</p>
+        <p className="text-heading3-bold text-[#333] ">Zetro</p>
       </Link>
       <div className="flex items-center gap-1">
         <OrganizationSwitcher

@@ -120,7 +120,7 @@ function TweetCard({
 
               {!isComment && comments.length > 0 && (
                 <Link
-                  href={`/thread/${id}`}
+                  href={`/tweets/${id}`}
                   className="flex items-center gap-2"
                 >
                   <div className="w-8 h-8 bg-red-400 rounded-full relative">
@@ -137,7 +137,7 @@ function TweetCard({
                       />
                     ))}
                   </div>
-                  <p className="mt-1 text-subtle-medium text-text">
+                  <p className="mt-1 text-subtle-medium text-text ml-4">
                     {comments.length} comments
                   </p>
                 </Link>

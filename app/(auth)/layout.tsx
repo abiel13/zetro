@@ -13,7 +13,7 @@ export default function AuthLayout({
   return (
     <ClerkProvider>
       <html>
-        <body className="bg-dark-1">
+        <body className="bg-background">
           <div className="w-full flex justify-center items-center min-h-screen">
             {children}
           </div>
