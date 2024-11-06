@@ -10,7 +10,7 @@ const user = await currentUser();
 
 
 const userInfo = await fetchUser(user!.id);
-if(userInfo?.onboarded) redirect('/');
+// if(userInfo?.onboarded) redirect('/');
 
 const userData = {
   id: user!.id,
@@ -29,7 +29,7 @@ const userData = {
         Complete your profile to use Zetro
       </p>
 
-      <section className="mt-9 bg-dark-2 p-10 ">
+      <section className="mt-9 bg-sidebar-inactive p-10 ">
         <AccountProfile user={userData} />
       </section>
     </section>
