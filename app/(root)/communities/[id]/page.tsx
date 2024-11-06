@@ -77,7 +77,7 @@ async function Page({ params }: { params: { id: string } }) {
 
           <TabsContent value='requests' className='w-full text-light-1'>
             {/* @ts-ignore */}
-            <ThreadsTab
+            <TweetsTab
               currentUserId={user.id}
               accountId={communityDetails._id}
               accountType='Community'
