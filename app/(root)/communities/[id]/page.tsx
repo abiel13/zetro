@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { communityTabs } from "@/constants/constants.index";
 
 import UserCard from "@/components/UserCard";
-import ThreadsTab from "@/components/TweetsTab";
+import TweetsTab from "@/components/TweetsTab";
 import ProfileHeader from "@/components/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
