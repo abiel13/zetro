@@ -39,6 +39,7 @@
     const pathname = usePathname();
     const router = useRouter();
     const { startUpload } = useUploadThing("media");
+    const [loading, setLoading] = useState(false)
 
     async function onSubmit(values: z.infer<typeof userValidation>) {
       const blob = values.profile_photo;
@@ -54,6 +55,7 @@
       }
 
       try {
+        setLoading(true)
         await updateUser({
           bio: values.bio,
           username: values.username,
@@ -70,6 +72,8 @@
         }
       } catch (error) {
         console.log(error);
+      }finally{
+        setLoading(false)
       }
     }
 
@@ -193,7 +197,7 @@
           )}
         />
         <Button type="submit" className="bg-primary-500">
-          Submit
+          {loading ? 'loading...': 'Submit'}
         </Button>
       </form>
     </Form>

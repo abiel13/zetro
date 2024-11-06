@@ -22,8 +22,8 @@ async function Page() {
         {activity.length > 0 ? (
           <>
             {activity.map((activity) => (
-              <Link key={activity._id} href={`/thread/${activity.parentId}`}>
-                <article className='activity-card'>
+              <Link key={activity._id} href={`/tweets/${activity.parentId}`}>
+                <article className='activity-card bg-sidebar-inactive'>
                   <Image
                     src={activity.author.image}
                     alt='user_logo'
